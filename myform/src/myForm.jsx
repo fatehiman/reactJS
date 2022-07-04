@@ -9,6 +9,7 @@ export default class MyForm extends Component {
     this.state = {
       savedFamily: "-",
       savedPhone: "-",
+      savedCity: "-",
     };
     this.saveForm = this.saveForm.bind(this);
     this.resetForm = this.resetForm.bind(this);
@@ -21,6 +22,7 @@ export default class MyForm extends Component {
     this.setState({
       savedFamily: event.target.elements.family.value,
       savedPhone: event.target.elements.phoneNumber.value,
+      savedCity: event.target.elements.city.value,
     });
     //setFamily(event.target.elements.family.value);
     //setPhone(event.target.elements.phoneNumber.value);
@@ -32,8 +34,10 @@ export default class MyForm extends Component {
     this.setState({
       familyDefVal: "-",
       phoneDefVal: "-",
+      cityDefVal: "-",
       savedFamily: "-",
       savedPhone: "-",
+      savedCity: "-",
     });
     return;
   }
@@ -49,6 +53,10 @@ export default class MyForm extends Component {
           Phone: <input type="text" name="phoneNumber" value={this.state.phoneDefVal} />
         </label>
         <br />
+        <label>
+          City: <input type="text" name="city" value={this.state.cityDefVal} />
+        </label>
+        <br />
         <button type="submit">Save</button>
         <button onClick={this.resetForm}>Reset</button>
         <br />
@@ -56,6 +64,7 @@ export default class MyForm extends Component {
         <div style={{ border: "1px solid #707070", height: "100px", width: "300px", display: "block" }}>
           Family: <label>{this.state.savedFamily}</label> <br />
           Phone: <label>{this.state.savedPhone}</label> <br />
+          City: <label>{this.state.savedCity}</label> <br />
         </div>
       </form>
     );
