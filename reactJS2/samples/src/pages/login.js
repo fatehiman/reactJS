@@ -7,7 +7,7 @@ const Login = () => {
   const [isUsernameValid, setIsUsernameValid] = useState(false);
 
   useEffect(() => {
-    setIsUsernameValid(/\w[a-zA-Z]/.test(username));
+    setIsUsernameValid(/[^0-9]/g.test(username));
     return () => {};
   }, [username]);
 
@@ -21,7 +21,7 @@ const Login = () => {
     <div>
       Please Login:
       <form onSubmit={processLogin}>
-        <input type="text" name="username" style={  isUsernameValid ? {} : {borderBottom:'4px solid red' } } value={username} onChange={(e) => setUsername(e.target.value)} />        
+        <input type="text" name="username" style={  username && isUsernameValid ? {} : {borderBottom:'4px solid red' } } value={username} onChange={(e) => setUsername(e.target.value)} />        
         <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <input type="submit" value="Login" />
       </form>
