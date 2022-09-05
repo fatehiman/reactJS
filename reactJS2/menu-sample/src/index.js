@@ -2,29 +2,28 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./index.css";
-import App from "./App";
+import Home from "./pages/home";
 import reportWebVitals from "./reportWebVitals";
-import Login from "./login";
-import NotFound from "./notFound";
+import Login from "./pages/login";
+import NotFound from "./pages/notFound";
+import TopMenu from "./components/topMenu";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <div style={{ display: "block", border: "1px solid #ffa0a0", marginBottom: "9px" }}>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/articles">Articles</Link>
-          <Link to="/news">News</Link>
-        </nav>
+      <TopMenu />
+
+      <div className="content">
+        <strong>Pros</strong>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/articles" element={<Login />}></Route>
+          <Route path="/news" element={<Login />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
       </div>
-      <Routes>
-        <Route path="/" element={<App />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/articles" element={<Login />}></Route>
-        <Route path="/news" element={<Login />}></Route>
-        <Route path="*" element={<NotFound />}></Route>
-      </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
