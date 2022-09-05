@@ -7,7 +7,7 @@ const Login = () => {
   const [isUsernameValid, setIsUsernameValid] = useState(false);
 
   useEffect(() => {
-    setIsUsernameValid(/[^0-9]/g.test(username));
+    setIsUsernameValid(/^[a-zA-Z-_]{3,20}$/.test(username));
     return () => {};
   }, [username]);
 
@@ -21,7 +21,13 @@ const Login = () => {
     <div>
       Please Login:
       <form onSubmit={processLogin}>
-        <input type="text" name="username" style={  username && isUsernameValid ? {} : {borderBottom:'4px solid red' } } value={username} onChange={(e) => setUsername(e.target.value)} />        
+        <input
+          type="text"
+          name="username"
+          style={username && isUsernameValid ? {} : { borderBottom: "4px solid red" }}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <input type="submit" value="Login" />
       </form>
@@ -30,3 +36,35 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+    
+    
+    
+// Document
+
+
+
+
+// main.innerHTML = "Loading...";
+// const myPromise = new Promise( (resOk,resErr) => {
+//     const fetchPromise = fetch("https://jsonplaceholder.typicode.com/users");
+//     const main = document.getElementById("main");
+//     resOk(fetchPromise);
+// });
+
+// myPromise.then(response => {
+//     return response.json();
+// }, p => console.log(p))
+// .then(people => {
+// main.innerHTML = '';
+// for(let {name} of people)
+//     main.innerHTML += name+'';
+// })
+// .catch(e=> console.log('ERROR: '+e))
+
+
+
