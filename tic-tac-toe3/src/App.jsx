@@ -7,6 +7,12 @@ class App extends React.Component {
 }
 
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cellValues: Array(9).fill(null),
+    };
+  }
   render() {
     return (
       <div className="board">
