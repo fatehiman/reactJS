@@ -47,12 +47,14 @@ class Board extends React.Component {
   }
 }
 
-function Cell(props) {
-  return (
-    <button className="cell" onClick={props.onClick()}>
-      {props.valuex}
-    </button>
-  );
+class Cell extends React.Component {
+  render() {
+    return (
+      <button className="cell" onClick={() => this.props.onClick()}>
+        {this.props.valuex}
+      </button>
+    );
+  }
 }
 
 export default App;
