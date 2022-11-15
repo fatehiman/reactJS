@@ -46,7 +46,7 @@ class App extends React.Component {
     } else {
       gameStatus = (
         <>
-          Next player: <span style={{ fontWeight: "Bold", color: this.state.xIsNext ? "brown" : "orange" }}> {this.state.xIsNext ? "X" : "O"} </span>
+          Next player: <span style={{ fontWeight: "bold", color: this.state.xIsNext ? "brown" : "orange" }}> {this.state.xIsNext ? "X" : "O"} </span>
         </>
       );
     }
