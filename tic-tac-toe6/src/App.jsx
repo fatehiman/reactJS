@@ -1,65 +1,75 @@
 import React from "react";
 
 class App extends React.Component {
-  render() {
-    return <Board />;
-  }
-}
-
-class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null),
+      history: [{ squares: Array(9).fill(null) }],
       xIsNext: true,
-      finalWinner: "",
     };
-  }
-
-  handleClick(i) {
-    if (!this.state.squares[i] && !calculateWinner(this.state.squares)) {
-      const squaresB = this.state.squares.slice();
-      squaresB[i] = this.state.xIsNext ? "X" : "O";
-      this.setState({ squares: squaresB, xIsNext: !this.state.xIsNext });
-    }
-  }
-
-  renderSquares(i) {
-    return <Cell valuex={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
   }
 
   doResetGame() {
     this.setState({
-      squares: Array(9).fill(null),
+      history: [{ squares: Array(9).fill(null) }],
       xIsNext: true,
     });
   }
 
+  handleClick(i) {
+    const history2 = this.state.history;
+    const current = history2[history2.length - 1];
+    const squares2 = current.squares.slice();
+    if (calculateWinner(squares2) || squares2[i]) return;
+    squares2[i] = this.state.xIsNext ? "X" : "O";
+    this.setState({
+      history: history2.concat([
+        {
+          squares: squares2,
+        },
+      ]),
+      xIsNext: !this.state.xIsNext,
+    });
+  }
+
   render() {
+    const history2 = this.state.history;
+    const current = history2[history2.length - 1];
+    const winner = calculateWinner(current.squares);
     let gameStatus;
-    const winner = calculateWinner(this.state.squares);
     if (winner) {
-      // gameStatus = <span style={{ color: "red" }}> Winner: </span>;
       gameStatus = (
         <>
-          <span style={{ color: "red" }}> Winner: </span> <span style={{ color: "green", fontWeight: "bold" }}> {winner} </span>
+          <span style={{ color: "green", fontWeight: "bold" }}> Winner: {winner} </span>
         </>
       );
-      // this.setState({ finalWinner: winner });
-      // this.state = {finalWinner: winner};
     } else {
       gameStatus = (
         <>
-          Next player: <span style={{ color: "red" }}> {this.state.xIsNext ? "X" : "O"} </span>
+          Next player: <span style={{ fontWeight: "bold", color: this.state.xIsNext ? "brown" : "orange" }}> {this.state.xIsNext ? "X" : "O"} </span>
         </>
       );
     }
     return (
       <>
-        <div>
-          <button onClick={() => this.doResetGame()}>Reset Game</button>
-        </div>
         {gameStatus}
+        <Board squares={current.squares} runDoResetGame={() => this.doResetGame()} onClickx={(i) => this.handleClick(i)} />
+      </>
+    );
+  }
+}
+
+class Board extends React.Component {
+  renderSquares(i) {
+    return <Cell valuex={this.props.squares[i]} onClick={() => this.props.onClickx(i)} />;
+  }
+
+  render() {
+    return (
+      <>
+        <div>
+          <button onClick={() => this.props.runDoResetGame()}>Reset Game</button>
+        </div>
         <div className="row">
           {this.renderSquares(0)}
           {this.renderSquares(1)}
