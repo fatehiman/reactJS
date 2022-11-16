@@ -16,6 +16,18 @@ class App extends React.Component {
     });
   }
 
+  doBack() {
+    let newSquares = this.state.history.slice();
+    newSquares.pop();
+    if (newSquares.length > 0) {
+      console.log(newSquares);
+      this.setState({
+        history: newSquares,
+        xIsNext: !this.state.xIsNext,
+      });
+    }
+  }
+
   handleClick(i) {
     const history2 = this.state.history;
     const current = history2[history2.length - 1];
@@ -53,7 +65,7 @@ class App extends React.Component {
     return (
       <>
         {gameStatus}
-        <Board squares={current.squares} runDoResetGame={() => this.doResetGame()} onClickx={(i) => this.handleClick(i)} />
+        <Board squares={current.squares} entireState={this.state} runDoResetGame={() => this.doResetGame()} runDoBack={() => this.doBack()} onClickx={(i) => this.handleClick(i)} />
       </>
     );
   }
@@ -67,8 +79,9 @@ class Board extends React.Component {
   render() {
     return (
       <>
-        <div>
-          <button onClick={() => this.props.runDoResetGame()}>Reset Game</button>
+        <div style={{ padding: "3px" }}>
+          <button onClick={() => this.props.runDoResetGame()}>Reset</button>
+          <button  disabled={this.props.entireState.history.length>1 ? false : true} onClick={() => this.props.runDoBack()}>Back</button>
         </div>
         <div className="row">
           {this.renderSquares(0)}
